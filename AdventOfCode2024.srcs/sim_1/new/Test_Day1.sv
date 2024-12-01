@@ -3,20 +3,28 @@
 module Test_Day1 ();
   localparam ARRAY_LENGTH = 1000;
   localparam VAR_SIZE = 32;
+  // localparam ARRAY_LENGTH = 6;
+  // localparam VAR_SIZE = 32;
 
-  reg  [VAR_SIZE-1:0] data[0:1][0:ARRAY_LENGTH-1];
-  wire [VAR_SIZE-1:0] out;
+  reg [VAR_SIZE-1:0] data[0:1][0:ARRAY_LENGTH-1];
+  wire [VAR_SIZE-1:0] out_pt1;
+  wire [VAR_SIZE-1:0] out_pt2;
 
-  reg                 clk;
-  localparam CLK_PERIOD = 10;
-
+  localparam CLK_PERIOD = 2;
+  reg clk;
   initial clk = 1'b0;
   always #(CLK_PERIOD / 2.0) clk = ~clk;
 
-  Day1 #(ARRAY_LENGTH, VAR_SIZE) puzzle (
+  Day1Part1 #(ARRAY_LENGTH, VAR_SIZE) puzzle_part1 (
       clk,
       data,
-      out
+      out_pt1
+  );
+
+  Day1Part2 #(ARRAY_LENGTH, VAR_SIZE) puzzle_part2 (
+      clk,
+      data,
+      out_pt2
   );
 
   initial begin
@@ -2030,8 +2038,8 @@ module Test_Day1 ();
           32'd29737
         }
     };
-    $monitor("Time %0t: Output=%d", $time, out);
-    #100;
+    $monitor("Time %0t: Part 1 = %d, Part 2 = %d", $time, out_pt1, out_pt2);
+    #2;
     $finish;
   end
 endmodule

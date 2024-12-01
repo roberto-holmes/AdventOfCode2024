@@ -38,7 +38,8 @@ module Sort #(
   end
 endmodule
 
-module Day1 #(
+
+module Day1Part1 #(
     parameter LENGTH = 6,
     parameter SIZE   = 8
 ) (
@@ -79,6 +80,39 @@ module Day1 #(
         end
         out = out + tmp;
       end
+    end
+  end
+endmodule
+
+function [31:0] count_instances(input reg [31:0] in[0:999], input reg [31:0] value);
+  integer i;
+  for (i = 0; i < 1000; i = i + 1) begin
+    if (i == 0) begin
+      count_instances = 32'd0;
+    end
+    if (in[i] == value) begin
+      count_instances = count_instances + value;
+    end
+  end
+
+endfunction
+
+module Day1Part2 #(
+    parameter LENGTH = 6,
+    parameter SIZE   = 8
+) (
+    input  wire            clk,
+    input  wire [SIZE-1:0] data[0:1][0:LENGTH-1],
+    output reg  [    31:0] out
+);
+
+  integer i;
+  always_comb begin
+    for (i = 0; i < LENGTH; i = i + 1) begin
+      if (i == 0) begin
+        out = 0;
+      end
+      out = out + count_instances(data[0], data[1][i]);
     end
   end
 endmodule
