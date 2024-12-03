@@ -94,7 +94,6 @@ function [31:0] count_instances(input reg [31:0] in[0:999], input reg [31:0] val
       count_instances = count_instances + value;
     end
   end
-
 endfunction
 
 module Day1Part2 #(
